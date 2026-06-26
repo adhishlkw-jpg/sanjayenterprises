@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #00a6e7;
+  --navy: #102a43;
+  --ice: #eaf8ff;
+  --section: #f8fbfd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--navy);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+@layer components {
+  .glass {
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(18px);
+  }
+
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold tracking-normal text-medical-navy sm:text-4xl lg:text-5xl;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-[0.18em] text-medical-blue;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-medical-blue px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#0096d0] focus:outline-none focus:ring-4 focus:ring-medical-blue/20;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-medical-blue/25 bg-white px-6 py-3 text-sm font-bold text-medical-navy shadow-sm transition hover:-translate-y-0.5 hover:border-medical-blue hover:text-medical-blue focus:outline-none focus:ring-4 focus:ring-medical-blue/15;
+  }
+
+  .floating-card {
+    @apply rounded-[22px] border border-slate-100 bg-white shadow-float;
+  }
+}
