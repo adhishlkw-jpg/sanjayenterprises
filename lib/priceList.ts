@@ -12,9 +12,6 @@ export type PriceListGroup = {
   items: PriceListItem[];
 };
 
-export const priceListNote =
-  "A Post Mastectomy kit restoring confidence, dignity and femininity for Breast Cancer Survivors. Contains a light weight silicon breast prosthesis and all accessories (prosthesis covers & pocketed bras), available in 2 shapes (Triangular / Oval) and 10 sizes per shape from T-1 (32-34) to T-10 (44-46).";
-
 export const priceList: PriceListGroup[] = [
   {
     supplier: "Hicare Remedy Pvt. Ltd.",

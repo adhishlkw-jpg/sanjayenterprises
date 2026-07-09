@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { filters, products, type Product } from "@/lib/products";
-import { priceList, priceListNote } from "@/lib/priceList";
+import { priceList } from "@/lib/priceList";
 
 const whatsapp = "919839075493";
 const navItems = ["Products", "Price List", "Partners", "IVF", "Enquiry", "Contact"];
@@ -366,7 +366,6 @@ export default function Home() {
             <div className="max-w-3xl">
               <p className="eyebrow">Distributor price list</p>
               <h2 className="section-title mt-4">Full product & pricing catalog, by supplier.</h2>
-              <p className="mt-5 leading-7 text-slate-600">{priceListNote}</p>
             </div>
             <a
               href="/SANJAY_ENTERPRISES.pdf"
