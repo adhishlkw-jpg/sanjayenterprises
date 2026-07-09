@@ -9,8 +9,11 @@ import {
   Boxes,
   Building2,
   Check,
+  ChevronDown,
   CircleDot,
   ClipboardCheck,
+  Download,
+  FileText,
   FlaskConical,
   HeartPulse,
   Mail,
@@ -28,9 +31,10 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { filters, products, type Product } from "@/lib/products";
+import { priceList, priceListNote } from "@/lib/priceList";
 
 const whatsapp = "919839075493";
-const navItems = ["Products", "Partners", "IVF", "Enquiry", "Contact"];
+const navItems = ["Products", "Price List", "Partners", "IVF", "Enquiry", "Contact"];
 
 const categories = [
   ["IVF Products", "IVF", FlaskConical],
@@ -151,6 +155,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(products[2]);
   const [heroFrame, setHeroFrame] = useState(0);
+  const [openSupplier, setOpenSupplier] = useState<string | null>(priceList[0]?.supplier ?? null);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -200,7 +205,7 @@ export default function Home() {
           </a>
           <div className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-bold text-slate-600 transition hover:text-medical-blue">
+              <a key={item} href={`#${item.toLowerCase().replace(/\s+/g, "-")}`} className="text-sm font-bold text-slate-600 transition hover:text-medical-blue">
                 {item}
               </a>
             ))}
@@ -352,6 +357,95 @@ export default function Home() {
             ))}
           </div>
           <div id="product-detail" className="mt-10 scroll-mt-28">{selectedProduct && <ProductDetail product={selectedProduct} onClose={() => setSelectedProduct(null)} />}</div>
+        </div>
+      </section>
+
+      <section id="price-list" className="border-t border-slate-100 py-24">
+        <div className="section-shell">
+          <Reveal className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="eyebrow">Distributor price list</p>
+              <h2 className="section-title mt-4">Full product & pricing catalog, by supplier.</h2>
+              <p className="mt-5 leading-7 text-slate-600">{priceListNote}</p>
+            </div>
+            <a
+              href="/SANJAY_ENTERPRISES.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary shrink-0"
+            >
+              <Download size={17} className="mr-2" /> Download Full Price List (PDF)
+            </a>
+          </Reveal>
+
+          <div className="mt-12 grid gap-4">
+            {priceList.map((group) => {
+              const isOpen = openSupplier === group.supplier;
+              return (
+                <Reveal key={group.supplier}>
+                  <div className="floating-card overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setOpenSupplier(isOpen ? null : group.supplier)}
+                      className="flex w-full items-center justify-between gap-4 p-6 text-left"
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-medical-ice text-medical-blue">
+                          <FileText size={20} />
+                        </span>
+                        <div>
+                          <p className="text-lg font-black text-medical-navy">
+                            {group.supplier}
+                            {group.location && <span className="ml-2 text-sm font-semibold text-slate-400">{group.location}</span>}
+                          </p>
+                          <p className="text-sm text-slate-500">{group.items.length} products</p>
+                        </div>
+                      </div>
+                      <ChevronDown size={20} className={`shrink-0 text-medical-blue transition ${isOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {isOpen && (
+                      <div className="overflow-x-auto border-t border-slate-100 px-2 pb-2 sm:px-4 sm:pb-4">
+                        <table className="w-full min-w-[560px] border-collapse text-sm">
+                          <thead>
+                            <tr className="text-left text-xs font-black uppercase tracking-[0.1em] text-slate-400">
+                              <th className="px-3 py-3">Product</th>
+                              <th className="px-3 py-3">Pack</th>
+                              <th className="px-3 py-3">Rate (₹)</th>
+                              <th className="px-3 py-3">GST</th>
+                              <th className="px-3 py-3">HSN Code</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {group.items.map((item) => (
+                              <tr key={item.name} className="border-t border-slate-100">
+                                <td className="px-3 py-3 font-bold text-medical-navy">{item.name}</td>
+                                <td className="px-3 py-3 text-slate-600">{item.pack}</td>
+                                <td className="px-3 py-3 text-slate-600">{item.rate}</td>
+                                <td className="px-3 py-3 text-slate-600">{item.gst}</td>
+                                <td className="px-3 py-3 text-slate-600">{item.hsn}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal className="mt-10">
+            <div className="floating-card flex flex-col items-start gap-4 p-7 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-lg font-black text-medical-navy">Need a quote on any item above?</p>
+                <p className="mt-1 text-sm text-slate-500">Send the product name and quantity over WhatsApp for a same-day response.</p>
+              </div>
+              <a className="btn-secondary shrink-0" href={waLink("I would like a quote from the Sanjay Enterprises price list.")} target="_blank" rel="noreferrer">
+                Request Quote <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
